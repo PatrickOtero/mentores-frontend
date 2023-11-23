@@ -3,8 +3,12 @@ import { Button } from "@/components/atoms/Button";
 import Image from "next/image";
 import Link from "next/link";
 import { ContainerHeader, GroupBtn } from "./style";
+import { useEffect, useState } from "react";
 
 export function Header() {
+
+  // const [ userType, setUserType ] = useState("user")
+
   return (
     <ContainerHeader>
       <div>
@@ -19,7 +23,7 @@ export function Header() {
         <Link href={"/cadastro"}>
           <Button content="Quero Mentorar" btnRole={"primary"} />
         </Link>
-        <Link href={"/login"}>
+        <Link href={ {pathname: "/login", query: { userType: "mentor" }} }>
           <Button content="Login para Mentores" btnRole={"secondary"} />
         </Link>
       </GroupBtn>

@@ -1,10 +1,10 @@
-import axios from "axios";
 import {
   IUserLoginService,
   UserLoginDTO,
 } from "./interfaces/IUserLoginService";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import { api } from "./axios";
 
 const userLoginService = (): IUserLoginService => {
 
@@ -13,29 +13,38 @@ const userLoginService = (): IUserLoginService => {
   const [formState, setFormState] = useState({
     email: "",
     password: "",
+    type: "",
     errors: "",
   });
     
-  const sendLogin = async (data: UserLoginDTO) => {
+  const sendLogin = async (data: UserLoginDTO, userType: string) => {
 
+    console.log(userType)
+
+    if (typeof userType == "string") {
+    data.type = userType
+    }
+
+    console.log(data)
     await validateForm(data)
     try {
-      const response = await axios.post(
-        "https://mentores-backend.onrender.com/auth/login",
-        data
-      );
+      const response = await api.post("/auth/login", data);
+
       setFormState({
         ...formState,
         errors: ""
       })
-      router.push('/genericPage')
-    } catch (error) {
+      if (response.data.token) {
+        router.push('/genericPage')
+      }
+    } catch (error: any) {
+      console.log(error.response.data.message[0])
       setFormState({
         ...formState,
         errors:"*E-mail ou senha incorretos."
       })
-      setCountError(countError + 1)
-      console.log(countError)
+      // setCountError(countError + 1)
+      // console.log(countError)
     }
   };
 

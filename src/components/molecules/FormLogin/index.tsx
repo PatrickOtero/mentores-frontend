@@ -10,17 +10,25 @@ import "react-toastify/dist/ReactToastify.css";
 import { Checkbox } from "../../atoms/Checkbox";
 import { ContainerForm } from "./style";
 import userLoginService from "@/services/userLoginService";
+import { useRouter } from "next/router";
 
 
 export function FormLogin() {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [ type, setType ] = useState("")
   const [keepConnected, setKeepConnected] = useState(false);
   const [disable, setDisable] = useState(false);
   const [submitButton, setSubmitButton] = useState(false);
 
   const { sendLogin, formState, countError } = userLoginService();
+
+  const router = useRouter()
+
+  const { userType } = router.query;
+
+  console.log(userType)
 
   const notify = (message: string) => {
     toast.error(message, {
@@ -28,12 +36,16 @@ export function FormLogin() {
       toastId: "customId",
     });
   };
-
   
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    console.log(userType)
     setLoading(true);
-      await sendLogin({ email, password });
+
+    if (typeof userType == "string") {
+      await sendLogin({ email, password, type }, userType);
+    }
+      
       setTimeout(() => {
         setLoading(false);
       }, 500); 
