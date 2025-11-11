@@ -27,6 +27,8 @@ const UserUpdateService = () => {
       },
       config
     );
+
+    console.log(data);
   };
 
   const handleMentorCalendlyInfo = async (data: ICalendlyUserInfo) => {

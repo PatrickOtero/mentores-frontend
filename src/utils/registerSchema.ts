@@ -1,7 +1,11 @@
 import * as yup from 'yup';
 
 export const registerSchema = yup.object({
-  name: yup.string().required(''),
+  name: yup
+    .string()
+    .required('')
+    .matches(/^[A-Za-zÀ-ÿ\s]+$/, 'O nome deve conter apenas letras')
+    .max(50, 'Máximo de 100 caracteres'),
   email: yup
     .string()
     .email('E-mail inválido')
@@ -27,7 +31,22 @@ export const registerSchema = yup.object({
     .oneOf([yup.ref('password')], 'Os campos informados não coincidem')
     .required(''),
 
-  dateBirthday: yup.date().required(''),
+  dateBirthday: yup
+    .date()
+    .required('Data de nascimento obrigatória')
+    .test('is-18', 'Você precisa ter pelo menos 18 anos', value => {
+      if (!value) return false;
+
+      const today = new Date();
+      const eighteenYearsAgo = new Date(
+        today.getFullYear() - 18,
+        today.getMonth(),
+        today.getDate()
+      );
+
+      return value <= eighteenYearsAgo;
+    }),
+
   agreeWithTermsAndPolicies: yup
     .boolean()
     .required(
