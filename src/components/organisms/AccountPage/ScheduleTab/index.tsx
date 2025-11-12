@@ -5,7 +5,11 @@ import { ModalCancelKeepRoute } from '@/components/molecules/ModalCancelKeepRout
 import { useAuthContext } from '@/context/Auth/AuthContext';
 import UserUpdateService from '@/services/user/userUpdateService';
 import { handleError } from '@/utils/handleError';
-import { isCalendlyLink, isValidHttpsUrl, splitCalendlyName } from '@/utils/ValidateCalendlyInput';
+import {
+  isCalendlyLink,
+  isValidHttpsUrl,
+  splitCalendlyName,
+} from '@/utils/ValidateCalendlyInput';
 import CheckCircleOutlineRoundedIcon from '@mui/icons-material/CheckCircleOutlineRounded';
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
@@ -38,7 +42,10 @@ export function ScheduleTab() {
   const { mentor, mentorCalendlyInfo } = useAuthContext();
 
   const generateCalendlyLink = () => {
-    if (mentorCalendlyInfo.data?.calendlyName && mentorCalendlyInfo.data?.agendaName) {
+    if (
+      mentorCalendlyInfo.data?.calendlyName &&
+      mentorCalendlyInfo.data?.agendaName
+    ) {
       return `https://calendly.com/${mentorCalendlyInfo.data.calendlyName}/${mentorCalendlyInfo.data.agendaName}`;
     }
     return '';
@@ -47,7 +54,10 @@ export function ScheduleTab() {
   useEffect(() => {
     const link = generateCalendlyLink();
     setInputValue(link);
-  }, [mentorCalendlyInfo.data?.calendlyName, mentorCalendlyInfo.data?.agendaName]);
+  }, [
+    mentorCalendlyInfo.data?.calendlyName,
+    mentorCalendlyInfo.data?.agendaName,
+  ]);
 
   const buttonDisabledVerification = useCallback(() => {
     const valid = isValidHttpsUrl(inputValue) && isCalendlyLink(inputValue);
@@ -118,8 +128,9 @@ export function ScheduleTab() {
   };
 
   const startOAuthCalendlySync = () => {
-    const calendlyClientId = '0FCoWFaytwSPcPUI2FSxLAxmGHNfLaXrye7in6WXkmY';
-    const redirectUri = "https://p01--mentores-backend-api--brg9tw85vflp.code.run/calendly/callback";
+    const calendlyClientId = 'Vx2DRKhKAvTcl5y8N1SqGg0OQ-9HR4KTO62t29C5L8M';
+    const redirectUri =
+      'https://p01--mentores-backend-api-dev--bj8pjy8s82zl.code.run/calendly/callback';
     const calendlyAuthUrl = `https://auth.calendly.com/oauth/authorize?client_id=${calendlyClientId}&response_type=code&redirect_uri=${redirectUri}&state=${encodeURIComponent(String(mentor.data?.id))}`;
 
     window.location.href = calendlyAuthUrl;
@@ -165,15 +176,20 @@ export function ScheduleTab() {
               onPaste={(e: React.ClipboardEvent<HTMLInputElement>) => {
                 e.preventDefault();
                 const pastedText = e.clipboardData.getData('text');
-                const valid = isValidHttpsUrl(pastedText) && isCalendlyLink(pastedText);
+                const valid =
+                  isValidHttpsUrl(pastedText) && isCalendlyLink(pastedText);
                 setIsValid(valid);
                 setIsButtonDisabled(!valid);
                 setInputValue(pastedText);
               }}
               id="link-calendly"
             />
-            <PlaceholderInput htmlFor="link-calendly">Link da agenda do Calendly</PlaceholderInput>
-            {isValid === false && inputValue !== '' && <StyledErrorOutlineRoundedIcon aria-hidden color="error" />}
+            <PlaceholderInput htmlFor="link-calendly">
+              Link da agenda do Calendly
+            </PlaceholderInput>
+            {isValid === false && inputValue !== '' && (
+              <StyledErrorOutlineRoundedIcon aria-hidden color="error" />
+            )}
           </ContainerInput>
           {isValid === false && inputValue !== '' && (
             <ContainerErrorInputCalendly>
@@ -185,11 +201,19 @@ export function ScheduleTab() {
           <Divider />
 
           <ButtonsContainer>
-            <Button type="button" variant="tertiary" onClick={handleWarningModal} disabled={isLoading}>
+            <Button
+              type="button"
+              variant="tertiary"
+              onClick={handleWarningModal}
+              disabled={isLoading}
+            >
               Cancelar
             </Button>
 
-            <Modal.Root open={openWarningModal} onOpenChange={() => setOpenWarningModal(false)}>
+            <Modal.Root
+              open={openWarningModal}
+              onOpenChange={() => setOpenWarningModal(false)}
+            >
               <ModalCancelKeepRoute handleDiscard={handleDiscard} />
             </Modal.Root>
 
@@ -204,7 +228,7 @@ export function ScheduleTab() {
             )}
           </ButtonsContainer>
         </form>
-      </ScheduleContent>  
+      </ScheduleContent>
     </ScheduleTabContainer>
   );
 }
