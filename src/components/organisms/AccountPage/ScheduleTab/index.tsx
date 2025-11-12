@@ -128,7 +128,7 @@ export function ScheduleTab() {
   };
 
   const startOAuthCalendlySync = () => {
-    const calendlyClientId = '0FCoWFaytwSPcPUI2FSxLAxmGHNfLaXrye7in6WXkmY';
+    const calendlyClientId = 'Vx2DRKhKAvTcl5y8N1SqGg0OQ-9HR4KTO62t29C5L8M';
     const redirectUri =
       'https://p01--mentores-backend-api-dev--bj8pjy8s82zl.code.run/calendly/callback';
     const calendlyAuthUrl = `https://auth.calendly.com/oauth/authorize?client_id=${calendlyClientId}&response_type=code&redirect_uri=${redirectUri}&state=${encodeURIComponent(String(mentor.data?.id))}`;
