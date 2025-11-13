@@ -5,6 +5,7 @@ import { Footer } from '@/components/organisms/Footer';
 import { HeroSection } from '@/components/organisms/HeroSection';
 import { MentorSection } from '@/components/organisms/MentorSection';
 import { Onboarding } from '@/components/organisms/Onboarding';
+import { useAuthContext } from '@/context/Auth/AuthContext';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
@@ -12,6 +13,7 @@ export default function HomePage() {
   const [isOpen, setIsOpen] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   const [isAccountDeleted, setIsAccountDeleted] = useState(false);
+  const { mentor } = useAuthContext();
 
   const router = useRouter();
 
