@@ -8,6 +8,7 @@ import { Onboarding } from '@/components/organisms/Onboarding';
 import { useAuthContext } from '@/context/Auth/AuthContext';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 export default function HomePage() {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,19 +27,18 @@ export default function HomePage() {
 
     const calendlyStatus = router.query['calendly'];
     if (calendlyStatus === 'success') {
-      setCurrentStep(4);
+      toast.success('Calendly conectado com sucesso!');
       setIsOpen(true);
     }
 
     if (calendlyStatus === 'error') {
-      console.error('Erro ao conectar com Calendly');
+      toast.error('Ocorreu um erro ao conectar com o Calendly.');
     }
   }, [router.query]);
 
   const handleCloseModal = () => {
-    const calendlyClientId = 'Vx2DRKhKAvTcl5y8N1SqGg0OQ-9HR4KTO62t29C5L8M';
-    const redirectUri =
-      'https://p01--mentores-backend-api-dev--bj8pjy8s82zl.code.run/calendly/callback';
+    const calendlyClientId = 'N24tR3RHkxh41T1wX2Gxm0cK7BdyIWicqVuLGDLrVSo';
+    const redirectUri = 'http://localhost:3000/calendly/callback';
     const calendlyAuthUrl = `https://auth.calendly.com/oauth/authorize?client_id=${calendlyClientId}&response_type=code&redirect_uri=${redirectUri}&state=${encodeURIComponent(String(mentor.data?.id))}`;
 
     window.location.href = calendlyAuthUrl;
