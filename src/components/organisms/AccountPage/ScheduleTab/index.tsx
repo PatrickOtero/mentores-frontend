@@ -39,7 +39,7 @@ export function ScheduleTab() {
   const [openWarningModal, setOpenWarningModal] = useState(false);
 
   const { handleMentorCalendlyInfo } = UserUpdateService();
-  const { mentor, mentorCalendlyInfo } = useAuthContext();
+  const { mentorCalendlyInfo } = useAuthContext();
 
   const generateCalendlyLink = () => {
     if (
@@ -127,15 +127,6 @@ export function ScheduleTab() {
     toastMessageDiscarded();
   };
 
-  const startOAuthCalendlySync = () => {
-    const calendlyClientId = '0FCoWFaytwSPcPUI2FSxLAxmGHNfLaXrye7in6WXkmY';
-    const redirectUri =
-      'https://p01--mentores-backend-api--brg9tw85vflp.code.run/calendly/callback';
-    const calendlyAuthUrl = `https://auth.calendly.com/oauth/authorize?client_id=${calendlyClientId}&response_type=code&redirect_uri=${redirectUri}&state=${encodeURIComponent(String(mentor.data?.id))}`;
-
-    window.location.href = calendlyAuthUrl;
-  };
-
   return (
     <ScheduleTabContainer value="schedule">
       <TitleTab>Agenda</TitleTab>
@@ -157,9 +148,6 @@ export function ScheduleTab() {
             variant="secondary"
           >
             Ir para o Calendly
-          </Button>
-          <Button onClick={startOAuthCalendlySync} variant="secondary">
-            Vincular Calendly OAuth
           </Button>
         </ButtonContainer>
 
