@@ -23,16 +23,6 @@ export default function HomePage() {
 
     const accountDeletedStatus = Boolean(router.query['account-deleted']);
     setIsAccountDeleted(accountDeletedStatus);
-
-    const calendlyStatus = router.query['calendly'];
-    if (calendlyStatus === 'success') {
-      setCurrentStep(4);
-      setIsOpen(true);
-    }
-
-    if (calendlyStatus === 'error') {
-      console.error('Erro ao conectar com Calendly');
-    }
   }, [router.query]);
 
   const handleCloseModal = () => {
