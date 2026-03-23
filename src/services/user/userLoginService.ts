@@ -1,12 +1,12 @@
+import { sessionNameUserInfo } from '@/data/static-info';
+import { api } from '@/lib/axios';
+import { getToken } from '@/lib/getToken';
+import { ResourceNotFound } from '../errors/resource-not-found';
+import { UserAlreadyLoggedIn } from '../errors/user-already-logged-in';
 import {
   UserCredentialsDTO,
   UserLoginResponse,
 } from '../interfaces/IUserLoginService';
-import { ResourceNotFound } from '../errors/resource-not-found';
-import { api } from '@/lib/axios';
-import { sessionNameUserInfo } from '@/data/static-info';
-import { UserAlreadyLoggedIn } from '../errors/user-already-logged-in';
-import { getToken } from '@/lib/getToken';
 
 const UserLoginService = () => {
   const login = async (data: UserCredentialsDTO) => {

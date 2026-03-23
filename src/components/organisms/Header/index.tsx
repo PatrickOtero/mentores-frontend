@@ -1,7 +1,16 @@
 import logoImg from '@/assets/logos/sou-junior.svg';
 import { Button } from '@/components/atoms/Button';
+import { UserAvatar } from '@/components/atoms/UserAvatar';
+import { useAuthContext } from '@/context/Auth/AuthContext';
+import { useBreakpoint } from '@/hooks/useBreakpoint';
+import UserLoginService from '@/services/user/userLoginService';
+import { breakpoints } from '@/styles/theme';
+import { Menu } from '@mui/icons-material';
+import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import {
   ContainerHeader,
   Divider,
@@ -17,23 +26,17 @@ import {
   MenuBurgerTrigger,
   SignOutBtn,
 } from './style';
-import { UserAvatar } from '@/components/atoms/UserAvatar';
-import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import { Menu } from '@mui/icons-material';
-import { useState } from 'react';
-import { useAuthContext } from '@/context/Auth/AuthContext';
-import UserLoginService from '@/services/user/userLoginService';
-import { useBreakpoint } from '@/hooks/useBreakpoint';
-import { breakpoints } from '@/styles/theme';
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { userSession, mentor, setUserSession } = useAuthContext();
   const { logout } = UserLoginService();
+  const router = useRouter();
   const breakpoint = useBreakpoint();
 
   function handleLogoutUser() {
     logout();
+    router.push('/');
     setUserSession(null);
   }
 
