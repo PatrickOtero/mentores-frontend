@@ -1,14 +1,17 @@
 import { Eye } from '@/components/atoms/Eye';
 import { InfoTooltip } from '@/components/atoms/InfoTooltip';
-import { DatePickerContainer, WrapperInput } from './styles';
-import { InputForm } from '../../../atoms/InputForm';
-import { Calendar } from '../../Calendar';
+import { ValuesFormType } from '@/utils/registerSchema';
 import { Field, useFormikContext } from 'formik';
 import { useState } from 'react';
-import { ValuesFormType } from '@/utils/registerSchema';
+import { InputForm } from '../../../atoms/InputForm';
+import { Calendar } from '../../Calendar';
+import { DatePickerContainer, WrapperInput } from './styles';
 
 import EventRoundedIcon from '@mui/icons-material/EventRounded';
 import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+
+dayjs.extend(utc);
 
 export function FormRegisterFields() {
   const [showCalendar, setShowCalendar] = useState(false);
@@ -56,10 +59,7 @@ export function FormRegisterFields() {
         <Calendar.Content
           selected={formik.values.dateBirthday}
           onSelected={(date: Date) => {
-            formik.setValues({
-              ...formik.values,
-              dateBirthday: date,
-            });
+            formik.setFieldValue('dateBirthday', dayjs.utc(date));
             setShowCalendar(false);
           }}
           avoidCollisions={false}

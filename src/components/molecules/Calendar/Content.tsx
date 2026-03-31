@@ -1,7 +1,12 @@
 import { getWeekDays } from '@/utils/get-week-days';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import * as Popover from '@radix-ui/react-popover';
 import dayjs from 'dayjs';
 import { useMemo } from 'react';
+import { useCalendarContext } from './Root';
+import { SelectMonths } from './SelectMonths';
+import { SelectYears } from './SelectYears';
 import {
   CalendarActions,
   CalendarDay,
@@ -10,11 +15,6 @@ import {
   LeftCalendarAction,
   RightCalendarAction,
 } from './styles';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { useCalendarContext } from './Root';
-import { SelectMonths } from './SelectMonths';
-import { SelectYears } from './SelectYears';
 
 interface CalendarWeek {
   week: number;
@@ -135,7 +135,7 @@ export function Content({ onSelected, selected, ...props }: ContentProps) {
                 {days.map(({ date, disabled }) => (
                   <td key={date.toString()}>
                     <CalendarDay
-                      pressed={date.isSame(dayjs(selected))}
+                      pressed={date.isSame(dayjs(selected), 'day')}
                       onPressedChange={() =>
                         onSelected && onSelected(date.toDate())
                       }
