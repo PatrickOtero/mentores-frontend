@@ -26,7 +26,7 @@ export function Root({ children, ...props }: RootProps) {
     });
 
     return Array.from(Array(12).keys()).map(number => {
-      const monthName = formatter.format(new Date(Date.UTC(2021, number + 1)));
+      const monthName = formatter.format(new Date(2021, number));
       return monthName
         .substring(0, 1)
         .toUpperCase()
